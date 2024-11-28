@@ -8,20 +8,13 @@
         body {
             font-family: Arial, sans-serif;
             text-align: center;
-            margin: 10px;
-        }
-        h1 {
-            font-size: 1.8em;
-        }
-        p {
-            font-size: 1em;
+            margin: 20px;
         }
         .container {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
             margin-top: 20px;
-            gap: 10px;
         }
         .word {
             background-color: #f0f0f0;
@@ -33,7 +26,7 @@
             user-select: none;
         }
         .dropzone {
-            width: 45%;
+            width: 200px;
             min-height: 50px;
             margin: 20px;
             padding: 10px;
@@ -47,22 +40,18 @@
         .dropzone.incorrect {
             border-color: #F44336;
         }
-        .message {
+        #error-message {
+            font-size: 1.5em;
             color: red;
-            font-weight: bold;
             margin-top: 20px;
-        }
-        @media (max-width: 600px) {
-            .dropzone {
-                width: 90%;
-            }
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
     <h1>Clasifica las Palabras</h1>
-    <p>Elmer Montenegro y he fabricado este sencillo juego para que practiques las reglas de acentuación.</p>
-    <p>Arrastra cada palabra a su categoría: agudas, graves, esdrújulas o sobresdrújulas.</p>
+    <p>Hola mi nombre es Elmer Montenegro y desarrollé este sencillo juego para que practiques las reglas de acentuación</p>
+    <p>Instrucciones: Arrastra cada palabra a su categoría: agudas, graves, esdrújulas o sobresdrújulas.</p>
     <div class="container">
         <div id="agudas" class="dropzone">Agudas</div>
         <div id="graves" class="dropzone">Graves</div>
@@ -72,9 +61,9 @@
     <div class="container" id="words-container">
         <!-- Las palabras se agregarán dinámicamente -->
     </div>
+    <p id="error-message"></p>
     <button onclick="checkAnswers()">Verificar Respuestas</button>
     <p id="result"></p>
-    <div id="error-message" class="message"></div>
     <script>
         const words = [
             { word: "canción", type: "agudas" },
@@ -163,3 +152,4 @@
     </script>
 </body>
 </html>
+
