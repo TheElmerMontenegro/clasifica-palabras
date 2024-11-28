@@ -18,9 +18,11 @@
         }
         .dropzones-container {
             display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
+            flex-wrap: nowrap;
+            justify-content: space-between;
             gap: 10px;
+            overflow-x: auto; /* Permite desplazamiento horizontal si no cabe */
+            padding: 10px;
             margin-bottom: 20px;
         }
         .word-container {
@@ -39,6 +41,7 @@
             user-select: none;
         }
         .dropzone {
+            flex: 0 0 auto; /* Evita que se compriman */
             width: 200px;
             min-height: 50px;
             margin: 10px;
@@ -46,6 +49,7 @@
             border: 2px dashed #ccc;
             border-radius: 5px;
             text-align: center;
+            white-space: nowrap; /* Asegura que el texto no se corte */
         }
         .dropzone.correct {
             border-color: #4CAF50;
@@ -63,12 +67,11 @@
             .dropzones-container {
                 flex-direction: row;
                 flex-wrap: nowrap;
-                overflow-x: auto; /* Permite hacer scroll horizontal */
-                gap: 10px;
+                overflow-x: scroll; /* Scroll horizontal en pantallas pequeñas */
             }
             .dropzone {
                 flex: 0 0 auto;
-                width: 150px;
+                width: 150px; /* Ajusta el ancho en pantallas más pequeñas */
             }
             .word-container {
                 flex-wrap: wrap;
