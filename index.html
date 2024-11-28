@@ -10,15 +10,28 @@
             text-align: center;
             margin: 20px;
         }
-        .container {
+        h1 {
+            font-size: 1.8em;
+        }
+        p {
+            font-size: 1em;
+        }
+        .dropzones-container {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            margin-top: 20px;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .word-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
         }
         .word {
             background-color: #f0f0f0;
-            margin: 10px;
+            margin: 5px;
             padding: 10px 20px;
             border: 1px solid #ccc;
             border-radius: 5px;
@@ -28,7 +41,7 @@
         .dropzone {
             width: 200px;
             min-height: 50px;
-            margin: 20px;
+            margin: 10px;
             padding: 10px;
             border: 2px dashed #ccc;
             border-radius: 5px;
@@ -46,19 +59,34 @@
             margin-top: 20px;
             font-weight: bold;
         }
+        @media (max-width: 768px) {
+            .dropzones-container {
+                flex-direction: row;
+                flex-wrap: nowrap;
+                overflow-x: auto; /* Permite hacer scroll horizontal */
+                gap: 10px;
+            }
+            .dropzone {
+                flex: 0 0 auto;
+                width: 150px;
+            }
+            .word-container {
+                flex-wrap: wrap;
+            }
+        }
     </style>
 </head>
 <body>
     <h1>Clasifica las Palabras</h1>
     <p>Hola mi nombre es Elmer Montenegro y desarrollé este sencillo juego para que practiques las reglas de acentuación</p>
     <p>Instrucciones: Arrastra cada palabra a su categoría: agudas, graves, esdrújulas o sobresdrújulas.</p>
-    <div class="container">
+    <div class="dropzones-container">
         <div id="agudas" class="dropzone">Agudas</div>
         <div id="graves" class="dropzone">Graves</div>
         <div id="esdrujulas" class="dropzone">Esdrújulas</div>
         <div id="sobreesdrujulas" class="dropzone">Sobreesdrújulas</div>
     </div>
-    <div class="container" id="words-container">
+    <div class="word-container" id="words-container">
         <!-- Las palabras se agregarán dinámicamente -->
     </div>
     <p id="error-message"></p>
@@ -152,4 +180,3 @@
     </script>
 </body>
 </html>
-
