@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clasifica las Palabras</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 10px;
+        }
+        h1 {
+            font-size: 1.8em;
+        }
+        p {
+            font-size: 1em;
+        }
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 20px;
+            gap: 10px;
+        }
+        .word {
+            background-color: #f0f0f0;
+            margin: 10px;
+            padding: 10px 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            cursor: pointer;
+            user-select: none;
+        }
+        .dropzone {
+            width: 45%;
+            min-height: 50px;
+            margin: 20px;
+            padding: 10px;
+            border: 2px dashed #ccc;
+            border-radius: 5px;
+            text-align: center;
+        }
+        .dropzone.correct {
+            border-color: #4CAF50;
+        }
+        .dropzone.incorrect {
+            border-color: #F44336;
+        }
+        .message {
+            color: red;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+        @media (max-width: 600px) {
+            .dropzone {
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Clasifica las Palabras</h1>
+    <p>Elmer Montenegro y he fabricado este sencillo juego para que practiques las reglas de acentuación.</p>
+    <p>Arrastra cada palabra a su categoría: agudas, graves, esdrújulas o sobresdrújulas.</p>
+    <div class="container">
+        <div id="agudas" class="dropzone">Agudas</div>
+        <div id="graves" class="dropzone">Graves</div>
+        <div id="esdrujulas" class="dropzone">Esdrújulas</div>
+        <div id="sobreesdrujulas" class="dropzone">Sobreesdrújulas</div>
+    </div>
+    <div class="container" id="words-container">
+        <!-- Las palabras se agregarán dinámicamente -->
+    </div>
+    <button onclick="checkAnswers()">Verificar Respuestas</button>
+    <p id="result"></p>
+    <div id="error-message" class="message"></div>
+    <script>
+        const words = [
+            { word: "canción", type: "agudas" },
+            { word: "árbol", type: "graves" },
+            { word: "rápido", type: "esdrujulas" },
+            { word: "dígamelo", type: "sobreesdrujulas" },
+            { word: "pared", type: "graves" },
+            { word: "sofá", type: "agudas" },
+            { word: "típico", type: "esdrujulas" },
+            { word: "cómpramelo", type: "sobreesdrujulas" },
+            { word: "jardín", type: "agudas" },
+            { word: "azúcar", type: "graves" },
+            { word: "cómico", type: "esdrujulas" },
+            { word: "entrégamelo", type: "sobreesdrujulas" },
+            { word: "corazón", type: "agudas" },
+            { word: "lápiz", type: "graves" },
+            { word: "música", type: "esdrujulas" },
+            { word: "házmelo", type: "sobreesdrujulas" },
+            { word: "jamás", type: "agudas" },
+            { word: "ventana", type: "graves" },
+            { word: "médico", type: "esdrujulas" },
+            { word: "regálamelo", type: "sobreesdrujulas" }
+        ];
+
+        const wordsContainer = document.getElementById('words-container');
+        const dropzones = document.querySelectorAll('.dropzone');
+        const errorMessage = document.getElementById('error-message');
+
+        words.forEach(item => {
+            const wordDiv = document.createElement('div');
+            wordDiv.textContent = item.word;
+            wordDiv.classList.add('word');
+            wordDiv.draggable = true;
+            wordDiv.dataset.type = item.type;
+
+            wordDiv.addEventListener('dragstart', (e) => {
+                e.dataTransfer.setData('text/plain', item.type);
+                e.target.classList.add('dragging');
+            });
+
+            wordDiv.addEventListener('dragend', (e) => {
+                e.target.classList.remove('dragging');
+            });
+
+            wordsContainer.appendChild(wordDiv);
+        });
+
+        dropzones.forEach(zone => {
+            zone.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                zone.classList.add('hover');
+            });
+
+            zone.addEventListener('dragleave', () => {
+                zone.classList.remove('hover');
+            });
+
+            zone.addEventListener('drop', (e) => {
+                e.preventDefault();
+                const wordType = e.dataTransfer.getData('text/plain');
+                const draggedElement = document.querySelector('.dragging');
+                if (zone.id === wordType) {
+                    zone.appendChild(draggedElement);
+                    errorMessage.textContent = ""; // Limpia el mensaje de error
+                } else {
+                    errorMessage.textContent = "¡Error! La palabra no pertenece a esta categoría.";
+                }
+            });
+        });
+
+        function checkAnswers() {
+            let correctCount = 0;
+            dropzones.forEach(zone => {
+                const children = zone.querySelectorAll('.word');
+                children.forEach(child => {
+                    if (child.dataset.type === zone.id) {
+                        correctCount++;
+                        zone.classList.add('correct');
+                    } else {
+                        zone.classList.add('incorrect');
+                    }
+                });
+            });
+            document.getElementById('result').textContent = `Respuestas correctas: ${correctCount} / 20`;
+        }
+    </script>
+</body>
+</html>
